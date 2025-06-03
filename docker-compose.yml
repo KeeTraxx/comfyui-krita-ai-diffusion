@@ -1,0 +1,31 @@
+services:
+  download-krita-ai-diffusion-stuffs:
+    image: python:3
+    command: ["bash", "download.sh"]
+    working_dir: /opt/download
+    volumes:
+      - ./models:/opt/download/models
+      - ./nodes:/opt/download/custom_nodes
+      - ./download.sh:/opt/download/download.sh
+  comfyui:
+    ports:
+    - 8188:8188
+    build: comfyui-docker
+    volumes:
+      - ./models:/opt/comfyui/models
+      - ./nodes:/opt/comfyui/custom_nodes
+      - python_lib:/opt/conda/lib
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu]
+              count: all
+    depends_on:
+      download-krita-ai-diffusion-stuffs:
+        condition: service_completed_successfully
+    restart: unless-stopped
+
+volumes:
+  python_lib:
