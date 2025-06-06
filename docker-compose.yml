@@ -14,7 +14,6 @@ services:
     volumes:
       - ./models:/opt/comfyui/models
       - ./nodes:/opt/comfyui/custom_nodes
-      - python_lib:/opt/conda/lib
     deploy:
       resources:
         reservations:
@@ -26,6 +25,3 @@ services:
       download-krita-ai-diffusion-stuffs:
         condition: service_completed_successfully
     restart: unless-stopped
-
-volumes:
-  python_lib:

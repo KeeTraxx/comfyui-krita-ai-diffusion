@@ -1,6 +1,3 @@
-FROM python:3
-
-
 # This image is based on the latest official PyTorch image, because it already contains CUDA, CuDNN, and PyTorch
 FROM pytorch/pytorch:2.6.0-cuda12.4-cudnn9-runtime
 
